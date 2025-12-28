@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Animated Heart Viewer</title>
+
+  <!-- Model Viewer -->
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #8EC5FC, #E0C3FC);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin: 8px 0 4px;
+      font-size: 26px;
+    }
+
+    p {
+      text-align: center;
+      color: #333;
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 65vh;
+      border-radius: 18px;
+      background: #ffffff;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
+      model-viewer {
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Augmented Reality Experience</h1>
+    <p>Scan • View • Watch the Heart in AR</p>
+
+    <model-viewer
+      src="https://raw.githubusercontent.com/sampathd11223344-sys/ar/main/realistic_human_heart.glb"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      camera-controls
+      autoplay
+      loop
+      shadow-intensity="1"
+      exposure="1">
+    </model-viewer>
+
+    <div class="footer">
+      WebAR Project • Designed by Sampath
+    </div>
+  </div>
+
+</body>
+</html>
