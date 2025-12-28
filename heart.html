@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AR Animated Heart Viewer</title>
 
   <!-- Model Viewer -->
@@ -81,10 +81,15 @@
       ar
       ar-modes="webxr scene-viewer quick-look"
       camera-controls
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="15deg"
       autoplay
       loop
+      animation-name="*"
       shadow-intensity="1"
-      exposure="1">
+      exposure="1.2"
+      environment-image="neutral">
     </model-viewer>
 
     <div class="footer">
