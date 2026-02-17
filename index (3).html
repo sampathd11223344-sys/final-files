@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Bava ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Fonts */
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .font-body { font-family: 'Nunito', sans-serif; }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        .heart-bg {
+            position: fixed;
+            bottom: -100px;
+            color: #ffb3c1;
+            animation: float 6s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d; transform: scale(1); }
+            50% { box-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055; transform: scale(1.05); }
+        }
+
+        .glow-btn {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes bounce-crazy {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px);}
+            60% {transform: translateY(-15px);}
+        }
+
+        .bounce-active {
+            animation: bounce-crazy 0.5s ease 5;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(255, 107, 129, 0.2);
+        }
+
+        /* Fade In On Scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* Quiz Selection */
+        .quiz-btn.selected {
+            background-color: #ff4d6d;
+            color: white;
+            border-color: #ff4d6d;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff4d6d;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Hide scrollbar */
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: #fff0f3; }
+        body::-webkit-scrollbar-thumb { background-color: #ffccd5; border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-pink-50 font-body text-gray-800 overflow-x-hidden relative min-h-screen">
+
+    <audio id="bgMusic" loop>
+        <source src="https://pixabay.com/music/download/music-116239.mp3?filename=romantic-piano-116239.mp3" type="audio/mp3">
+    </audio>
+
+    <div id="startOverlay" class="fixed inset-0 z-50 bg-pink-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-1000">
+        <div class="text-center animate-bounce">
+            <h1 class="font-cursive text-6xl text-red-500 mb-4">For You, Bava ❤️</h1>
+            <p class="text-gray-600 text-lg">Tap anywhere to begin our story...</p>
+            <div class="mt-8 text-4xl">🎁</div>
+        </div>
+    </div>
+
+    <div id="heartsContainer"></div>
+
+    <div class="container mx-auto px-4 py-8 max-w-2xl relative z-10">
+        
+        <header class="text-center mb-12 pt-8 fade-in-section">
+            <h1 class="font-cursive text-6xl text-red-600 mb-2 drop-shadow-sm">Hey Bava ❤️</h1>
+            <p class="text-xl text-gray-700 italic">From the moment you came into my life, everything changed in the most beautiful way… This is our little love story.</p>
+        </header>
+
+        <!-- Our Journey Sections -->
+        <section class="glass-card p-8 mb-8 text-center fade-in-section">
+            <h2 class="font-cursive text-4xl text-pink-600 mb-4">Our Journey</h2>
+            <p class="text-lg leading-relaxed text-gray-700 italic">"Our journey may not be perfect, but it is real and beautiful..."</p>
+        </section>
+
+        <!-- ✨ AI Feature 1: Love Note Generator -->
+        <section class="glass-card p-8 mb-8 fade-in-section border-2 border-pink-200">
+            <h2 class="font-cursive text-4xl text-pink-600 mb-4 text-center">✨ Magic Love Letter ✨</h2>
+            <p class="text-sm text-pink-400 text-center mb-4">Tell me a keyword (like 'smile', 'forever', 'kindness') and I'll write a note for you.</p>
+            <div class="flex gap-2">
+                <input type="text" id="aiInput" placeholder="Enter a word..." class="flex-1 p-2 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-pink-400">
+                <button onclick="generateLoveNote()" id="aiGenerateBtn" class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition flex items-center gap-2">
+                    Write ✨
+                </button>
+            </div>
+            <div id="aiResult" class="mt-4 text-gray-700 italic text-center min-h-[50px]"></div>
+        </section>
+
+        <section class="glass-card p-8 mb-8 text-center fade-in-section">
+            <h2 class="font-cursive text-4xl text-pink-600 mb-4">Our Meet</h2>
+            <p class="text-lg leading-relaxed text-gray-700">"The moment I met you, I knew my life was about to change forever..."</p>
+        </section>
+
+        <!-- Typing Effect -->
+        <section class="glass-card p-8 mb-8 text-center fade-in-section">
+            <h2 class="font-cursive text-4xl text-pink-600 mb-4">My Heart Speaks</h2>
+            <div id="typing-container" class="text-lg leading-relaxed text-gray-800 font-medium min-h-[200px] whitespace-pre-line text-left pl-4 border-l-4 border-pink-300"></div>
+        </section>
+
+        <!-- Love Quiz -->
+        <section class="glass-card p-8 mb-12 text-center fade-in-section">
+            <h2 class="font-cursive text-4xl text-pink-600 mb-6">Love Quiz (Crazy Fun) 😜</h2>
+            
+            <div class="space-y-6 text-left">
+                <div>
+                    <p class="font-bold text-pink-700 mb-2">1. Who is more crazy in love? 😜</p>
+                    <div class="flex gap-2">
+                        <button onclick="selectOption(this, 'Me')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">Me</button>
+                        <button onclick="selectOption(this, 'You')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">You</button>
+                        <button onclick="selectOption(this, 'Both')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">Both</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-pink-700 mb-2">2. Who thinks about the other more? 🤭</p>
+                    <div class="flex gap-2">
+                        <button onclick="selectOption(this, 'Me')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">Me</button>
+                        <button onclick="selectOption(this, 'You')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">You</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-pink-700 mb-2">3. Who is the luckiest? 🍀</p>
+                    <div class="flex gap-2">
+                        <button onclick="selectOption(this, 'Me')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">Me</button>
+                        <button onclick="selectOption(this, 'You')" class="quiz-btn border border-pink-400 rounded-full px-4 py-1 text-sm hover:bg-pink-100 transition">You</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quiz-result" class="hidden mt-6 flex flex-col items-center gap-4">
+                <div class="bg-pink-100 p-4 rounded-xl border border-pink-300 animate-bounce w-full">
+                    <p class="text-xl font-bold text-red-600">Looks like we are perfectly crazy for each other 😍</p>
+                </div>
+                <!-- ✨ AI Feature 2: Relationship Fortune -->
+                <button id="fortuneBtn" onclick="generateFortune()" class="bg-white border-2 border-red-400 text-red-500 font-bold py-2 px-6 rounded-full hover:bg-red-50 transition flex items-center gap-2">
+                    See Our Future ✨
+                </button>
+                <div id="fortuneText" class="text-pink-600 italic font-medium p-4 hidden"></div>
+            </div>
+        </section>
+
+        <div class="text-center py-12 mb-20 fade-in-section">
+            <button id="surpriseBtn" onclick="showProposal()" class="glow-btn bg-gradient-to-r from-red-500 to-pink-500 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg transform transition hover:scale-105">
+                CLICK FOR FINAL SURPRISE 💝
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals (Same as before) -->
+    <div id="proposalModal" class="fixed inset-0 bg-pink-900/90 z-40 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 text-center relative">
+            <h2 class="font-cursive text-5xl text-red-600 mb-8">Will You Be My Valentine? ❤️</h2>
+            <div class="flex justify-center gap-6 mt-8">
+                <button id="yesBtn" onclick="handleYesClick()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform">YES 💖</button>
+                <button id="noBtn" onmouseover="moveNoBtn()" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition absolute">NO 🙈</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="successPopup" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 text-center animate-[bounce_1s_ease-in-out]">
+            <p class="text-2xl font-bold text-pink-600 mb-6">You just made me the happiest person alive ❤️</p>
+            <button onclick="showFinalLetter()" class="bg-red-500 text-white px-6 py-2 rounded-full font-bold">Continue ➡️</button>
+        </div>
+    </div>
+
+    <div id="finalLetter" class="fixed inset-0 bg-pink-50 z-[60] hidden flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
+        <div class="max-w-2xl w-full border-4 border-double border-red-300 p-8 rounded-2xl bg-white shadow-2xl relative">
+            <h2 class="font-cursive text-5xl text-red-600 mb-8">My Promise To You</h2>
+            <p class="text-xl text-gray-700 font-medium space-y-4">I LOVE YOU FOREVER AND EVER BAVA ❤️</p>
+            <p class="font-cursive text-3xl text-pink-400 mt-4">From your darling 💋</p>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; // Handled by environment
+        const quizAnswers = {};
+
+        // --- Music Logic ---
+        const startOverlay = document.getElementById('startOverlay');
+        const bgMusic = document.getElementById('bgMusic');
+        startOverlay.addEventListener('click', () => {
+            bgMusic.volume = 0.3;
+            bgMusic.play().then(() => {
+                startOverlay.style.opacity = '0';
+                setTimeout(() => { startOverlay.style.display = 'none'; initAnimations(); }, 1000);
+            }).catch(() => { startOverlay.style.display = 'none'; initAnimations(); });
+        });
+
+        // --- AI Integration Functions ---
+        async function callGemini(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) {
+                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                }
+            }
+            return "My heart is too full to speak right now... (Connection error)";
+        }
+
+        async function generateLoveNote() {
+            const input = document.getElementById('aiInput').value;
+            const btn = document.getElementById('aiGenerateBtn');
+            const result = document.getElementById('aiResult');
+            if (!input) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loader"></span>';
+            result.textContent = "Summoning cupid...";
+
+            const prompt = `Write a very short, poetic, and romantic 2-line love note for "Bava" based on the word: ${input}. Keep it sweet and sentimental.`;
+            const note = await callGemini(prompt);
+            
+            result.textContent = note.replace(/"/g, '');
+            btn.disabled = false;
+            btn.innerHTML = 'Write ✨';
+        }
+
+        async function generateFortune() {
+            const btn = document.getElementById('fortuneBtn');
+            const result = document.getElementById('fortuneText');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loader"></span> Reading the stars...';
+            result.classList.remove('hidden');
+            result.textContent = "Analyzing our love...";
+
+            const answersStr = JSON.stringify(quizAnswers);
+            const prompt = `Based on these fun relationship quiz answers: ${answersStr}, write a 1-sentence whimsical and romantic "future prediction" for this couple. Make it cute and funny. Start with "The stars say..."`;
+            
+            const fortune = await callGemini(prompt);
+            result.textContent = fortune.replace(/"/g, '');
+            btn.disabled = false;
+            btn.innerHTML = 'See Our Future ✨';
+        }
+
+        // --- Core Web Logic ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.getElementById('heartsContainer').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        function initAnimations() {
+            setInterval(createHeart, 400);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.id === 'typing-container' && !typingStarted) startTyping();
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+        }
+
+        const typingText = `My heart speaks your name in every beat…\nIn every silence, I hear you.\nIn every crowd, I look for you.\nYou are my safe place,\nmy strength,\nmy forever.\nI love you endlessly. ❤️`;
+        let typingStarted = false;
+        function startTyping() {
+            typingStarted = true;
+            const container = document.getElementById('typing-container');
+            container.classList.add('typing-cursor');
+            let i = 0;
+            const interval = setInterval(() => {
+                container.textContent += typingText.charAt(i);
+                i++;
+                if (i >= typingText.length) { clearInterval(interval); container.classList.remove('typing-cursor'); }
+            }, 50);
+        }
+
+        function selectOption(btn, val) {
+            Array.from(btn.parentElement.children).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            const qText = btn.parentElement.previousElementSibling.textContent;
+            quizAnswers[qText] = val;
+            if (Object.keys(quizAnswers).length === 3) document.getElementById('quiz-result').classList.remove('hidden');
+        }
+
+        function showProposal() { document.getElementById('proposalModal').classList.remove('hidden'); }
+        function moveNoBtn() {
+            const btn = document.getElementById('noBtn');
+            btn.style.left = Math.random() * 150 + 'px';
+            btn.style.top = (Math.random() * 200 - 100) + 'px';
+        }
+
+        let yesClicks = 0;
+        function handleYesClick() {
+            const btn = document.getElementById('yesBtn');
+            if (yesClicks === 0) {
+                btn.classList.add('bounce-active');
+                setTimeout(() => { btn.classList.remove('bounce-active'); yesClicks = 1; }, 2500);
+            } else {
+                document.getElementById('proposalModal').classList.add('hidden');
+                document.getElementById('successPopup').classList.remove('hidden');
+            }
+        }
+        function showFinalLetter() { document.getElementById('successPopup').classList.add('hidden'); document.getElementById('finalLetter').classList.remove('hidden'); }
+    </script>
+</body>
+</html>
+  <body>
+      <h1 class="title">Hello World!</h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html>
